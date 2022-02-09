@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package pokemon;
+
+message PokemonID {
+  string value = 1;
+}
+
+option go_package="github.com/manofthelionarmy/learngRPC/ch2/pokemon";
+
+message Pokemon {
+  string name = 1;
+  uint64 attack = 2;
+  uint64 defense = 3;
+  uint64 spAttack = 4;
+  uint64 spDefense = 5;
+  uint64 speed = 6;
+}
+
+service PokemonInfo {
+  rpc getPokemon(PokemonID) returns (Pokemon);
+  rpc addPokemon(Pokemon) returns(PokemonID);
+}

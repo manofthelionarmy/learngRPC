@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message TextMessage {
+  string day = 1;
+  string value = 2;
+}
+
+message CompleteConversation {
+  repeated TextMessage textMessages = 1; // what does the repeated keyword do?
+}
+
+service TextService {
+  rpc ProduceMessage(stream TextMessage) returns(stream CompleteConversation);
+}

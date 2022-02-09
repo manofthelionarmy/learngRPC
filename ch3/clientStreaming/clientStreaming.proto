@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+message CaughtPokemon {
+  uint64 value=1;
+}
+
+message Pokemon {
+  string name=1;
+}
+
+service PokemonService {
+  rpc CatchPokemon(stream Pokemon) returns (CaughtPokemon);
+}

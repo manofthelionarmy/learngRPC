@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+message AnimeId {
+  string tag = 1;
+}
+
+message Anime {
+  string title = 1;
+}
+
+service AnimeService {
+  rpc getAnimeStream(AnimeId) returns (stream Anime);
+}
