@@ -33,12 +33,12 @@ func pokemonUnaryServerInterceptor(
 	handler grpc.UnaryHandler,
 ) (resp interface{}, err error) {
 	// Pre-Process request
-	fmt.Printf("logging request %+v\n", req)
+	fmt.Printf("logging request: %+v\n", req)
 	// Invoke rpc
 	msg, err := handler(ctx, req)
 
 	// Post-process
-	fmt.Printf("Post processing response message %+v\n", msg)
+	fmt.Printf("Post processing response message: %+v\n", msg)
 	resp = msg
 	return
 }

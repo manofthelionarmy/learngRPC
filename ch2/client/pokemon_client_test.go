@@ -29,7 +29,7 @@ func testGrpcClient(t *testing.T) {
 	defer lis.Close()
 
 	pokemonServer := &service.PokemonGrpcServer{
-		Pokemon: make(map[string]pb.Pokemon),
+		Pokemon: make(map[string]*pb.Pokemon),
 	}
 
 	server := grpc.NewServer()

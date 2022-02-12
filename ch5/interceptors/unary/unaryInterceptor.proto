@@ -6,7 +6,7 @@ message Pokemon {
 }
 
 message PokemonId {
-  uint32 id=1;
+  int32 id=1;
 }
 
 service PokemonService {
