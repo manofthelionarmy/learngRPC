@@ -104,3 +104,45 @@ func (w *wrappedPokemonStream) RecvMsg(m interface{}) error {
 	)
 	return w.ServerStream.RecvMsg(m)
 }
+
+type foo interface {
+	implementFunction(string)
+}
+
+// defining a function type
+type containerFunction func(string)
+
+// containerFucntion has a method called embeddedFunciton, and it satisfies foo interface
+func (cf containerFunction) implementFunction(s string) {
+	// once we invoke containerFunction's method, we can call the containerFunction beause,
+	// well it's a function
+	s += " world"
+	cf(s)
+}
+
+func result() {
+	cf := containerFunction(func(greeting string) {
+		fmt.Println(greeting + "!!!!!")
+	})
+
+	fooer := newFooWrapper(cf)
+
+	fooer.implementFunction("hello")
+}
+
+type fooWrapper struct {
+	foo // we're embedding the interface which promotes implementfunction to fooWrapper
+}
+
+var _ foo = (*fooWrapper)(nil)
+
+// in terms of the call stack, the container/wrapper will be called first
+func (w *fooWrapper) implementFunction(greeting string) {
+	greeting += " I'm excited to code!"
+	// we can call implementFunction by using our embedded interface since it is a field
+	w.foo.implementFunction(greeting)
+}
+
+func newFooWrapper(fooer foo) foo {
+	return &fooWrapper{fooer}
+}

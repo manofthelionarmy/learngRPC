@@ -99,5 +99,5 @@ func TestServerStreamInterceptor(t *testing.T) {
 	pokemonServerStream.CloseSend()
 
 	grpcServer.GracefulStop()
-	wg.Wait()
+	result()
 }
