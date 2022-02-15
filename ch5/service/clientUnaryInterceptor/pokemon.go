@@ -9,6 +9,8 @@ import (
 	pb "github.com/manofthelionarmy/learngRPC/ch5/interceptors/clientUnaryInterceptor"
 )
 
+var _ pb.PokemonServiceServer = (*PokemonServer)(nil)
+
 // PokemonServer implements the grpc service defined in our service definition
 type PokemonServer struct {
 	Pokemon map[string]*pb.Pokemon

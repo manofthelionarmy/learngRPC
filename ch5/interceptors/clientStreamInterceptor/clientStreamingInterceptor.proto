@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+message Pokemon {
+  int64 id=1;
+  string name=2;
+  PokemonTag tag=3;
+}
+
+message PokemonId {
+  int64 id=1;
+}
+
+message PokemonTag {
+  string value=1;
+}
+
+message Pokemons {
+  repeated Pokemon pokemons=1;
+}
+
+service PokemonService {
+  rpc addPokemon(Pokemon) returns (PokemonId);
+  rpc getPokemonByTag(stream PokemonTag) returns (Pokemons);
+}

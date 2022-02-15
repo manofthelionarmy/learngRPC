@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	pb "github.com/manofthelionarmy/learngRPC/ch2/pokemon"
 )
