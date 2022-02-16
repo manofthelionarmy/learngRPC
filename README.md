@@ -59,6 +59,7 @@ protoc -I ch2/pokemon \
 ```
 
 Using only protoc-gen-go and protoc-gen-go-grpc:
+
 ```
 protoc ch2/pokemon/*.proto \
                     --go_out=. \

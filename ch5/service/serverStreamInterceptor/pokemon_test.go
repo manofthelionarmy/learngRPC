@@ -1,4 +1,4 @@
-package streaminginterceptor
+package serverstreaminterceptor
 
 import (
 	"context"

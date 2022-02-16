@@ -37,6 +37,11 @@ func testServerStreaming(t *testing.T) {
 			return listener.Dial()
 		}),
 		grpc.WithInsecure(),
+		grpc.WithChainStreamInterceptor(
+			[]grpc.StreamClientInterceptor{
+				clientStreamInterceptor,
+			}...,
+		),
 	)
 
 	require.NoError(t, err)
@@ -64,6 +69,15 @@ func testServerStreaming(t *testing.T) {
 
 	animeServiceServer.AnimeByTag["favorites"] = favorites
 
+	animeServiceServer.AnimeByTag["watching"] = []pb.Anime{
+		{
+			Title: "One Piece",
+		},
+		{
+			Title: "Fire Force 8",
+		},
+	}
+
 	grpcServer := grpc.NewServer()
 
 	pb.RegisterAnimeServiceServer(grpcServer, animeServiceServer)
@@ -83,6 +97,21 @@ func testServerStreaming(t *testing.T) {
 	for {
 		anime, err := animeStream.Recv()
 		// When we return nil, from our implementation of GetAnimeStream for AnimeServiceServer, it'll return io.EOF
+		if err == io.EOF {
+			break
+		}
+		require.NoError(t, err)
+		fmt.Println(anime.Title)
+	}
+
+	watchingStream, err := animeServiceClient.GetAnimeStream(
+		context.Background(),
+		&pb.AnimeId{Tag: "watching"},
+	)
+
+	require.NoError(t, err)
+	for {
+		anime, err := watchingStream.Recv()
 		if err == io.EOF {
 			break
 		}
